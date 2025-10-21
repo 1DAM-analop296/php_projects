@@ -11,7 +11,6 @@
         <?php
         date_default_timezone_set('UTC');
         echo date("l, d M Y");
-        
         ?>
   </body>
 </html>
