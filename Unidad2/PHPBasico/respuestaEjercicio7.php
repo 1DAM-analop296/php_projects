@@ -9,12 +9,9 @@
   </head>
   <body>
         <?php
-        echo "<h2> El nombre del usuario " . $_POST['nombre_usuario'] . "</h2>";
-        if ($_POST['edad_usuario'] >=18) {
-            echo "<p> Eres mayor de edad </p>";
-        } else {
-            echo "<p>Eres menos de edad</p>";
-        }   
+        for($numeros=1; $numeros<=6; $numeros++){
+            echo"<h$numeros>H$numeros -". $_POST['nuevo_texto'] . "</h$numeros>";
+        }
         ?>
   </body>
 </html>

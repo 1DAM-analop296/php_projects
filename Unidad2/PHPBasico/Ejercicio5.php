@@ -7,14 +7,12 @@
     <title>my-project</title>
   </head>
   <body>
-    <form action="respuesta.php" method="post">
+    <form action="respuestaEjercicio5.php" method="post">
         <!-- Para enviar le nombre  -->
-        <label form="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre_usuario">
-        <!-- Para la edad -->
+        <label form="numero">Numero:</label>
+        <input type="text" id="numero" name="nuevo_numero">
          <br> <br>
-        <label form="edad">Edad:</label>
-        <input type="text" id="edad" name="edad_usuario">
+        <!-- Para enviar el formulario -->
         <button type="submit">Enviar</button>
     </form>
   </body>

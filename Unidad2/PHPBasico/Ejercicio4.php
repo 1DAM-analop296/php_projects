@@ -7,14 +7,16 @@
     <title>my-project</title>
   </head>
   <body>
-    <form action="respuesta.php" method="post">
+    <form action="respuestaEjercicio5.php" method="post">
         <!-- Para enviar le nombre  -->
-        <label form="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre_usuario">
-        <!-- Para la edad -->
+        <label form="numero">Dime tu salario bruto:</label>
+        <input type="text" id="salarioBruto" name="salario_bruto">
          <br> <br>
-        <label form="edad">Edad:</label>
-        <input type="text" id="edad" name="edad_usuario">
+        <!-- Para enviar el formulario -->
+        <label form="numero">Dime lo que te retienen:</label>
+        <input type="text" id="salarioBruto" name="salario_bruto">
+         <br> <br>
+
         <button type="submit">Enviar</button>
     </form>
   </body>

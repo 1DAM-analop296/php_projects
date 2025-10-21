@@ -9,12 +9,13 @@
   </head>
   <body>
         <?php
-        echo "<h2> El nombre del usuario " . $_POST['nombre_usuario'] . "</h2>";
-        if ($_POST['edad_usuario'] >=18) {
-            echo "<p> Eres mayor de edad </p>";
-        } else {
-            echo "<p>Eres menos de edad</p>";
-        }   
+        if ($_POST['nuevo_numero'] >0) {
+            echo "<p> El numero ". $_POST['nuevo_numero'] . " es positivo</p>";
+        } elseif ($_POST['nuevo_numero'] <0){
+            echo "<p> El numero ". $_POST['nuevo_numero'] . " es negativo</p>";
+        }else{
+            echo "<p> El numero es un 0";
+        }  
         ?>
   </body>
 </html>
