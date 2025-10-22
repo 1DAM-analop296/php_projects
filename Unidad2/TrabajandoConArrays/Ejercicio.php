@@ -8,8 +8,11 @@
     <link href="/src/style.css" rel="stylesheet">
   </head>
   <body>
-    <table>
         <?php
+        echo "<table>";
+        $comprobar=0;
+        $numeroAprobados=0;
+        $numeroSuspensos=0;
         $alumnos=array(
             array("nombre"=>"Ana","edad"=>17,"curso"=>"2DAM","promedio"=>9.1),
             array("nombre"=>"Luis","edad"=>18,"curso"=>"4ºESO","promedio"=>4.5),
@@ -17,25 +20,31 @@
             array("nombre"=>"Manuela","edad"=>18,"curso"=>"2DAM","promedio"=>6.7),
             array("nombre"=>"Paula","edad"=>16,"curso"=>"1DAM","promedio"=>7.2)
         );
-
-        foreach($alumnos as $key => $alumnos){
+        foreach($alumnos as $key => $alumno){
             echo "<tr>";
-            for ($i=0; $i <1 ; $i++) {   
-                echo "<th>Edad</th>";
-                echo "<th>Curso</th>";
-                echo "<th>Promedio</th>";
+            if($comprobar==0){
+               foreach($alumno as $k=>$v){
+                  echo "<th>".$k."</th>";
+              }
+             }
+            echo "</tr>";
+            echo "<tr>";
+            echo "<th>".$alumno["nombre"]."</th>";
+            echo "<th>".$alumno["edad"]."</th>";
+            echo "<th>".$alumno["curso"]."</th>";
+            echo "<th>".$alumno["promedio"]."</th>";
+            echo "</tr>";
+            if($alumno["promedio"]>=5){
+              $numeroAprobados++;
+            }else{
+              $numeroSuspensos++;
             }
-        
-            echo "</tr>";
-            echo "<tr>";
-            echo "<th>".$alumnos["nombre"]."</th>";
-            echo "<th>".$alumnos["edad"]."</th>";
-            echo "<th>".$alumnos["curso"]."</th>";
-            echo "<th>".$alumnos["promedio"]."</th>";
-            echo "</tr>";
+            $comprobar++;
         }
-
-
-        ?>
-    </table>
-  </body
+      
+        echo "</table>";
+        echo "<p>Resumen de notas</p>";
+        echo "<p>Total de aprobados: $numeroAprobados</p>";
+        echo "<p>Total de alumnos suspensos:$numeroSuspensos </p>";
+         ?>
+        </body
