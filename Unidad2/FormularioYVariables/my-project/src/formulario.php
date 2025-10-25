@@ -7,9 +7,9 @@
     <title>my-project</title>
     <link href="/src/style.css" rel="stylesheet">
   </head>
-  <body>
-    <form action="respuesta.php" method="get">
-        <div class="flex justify-center m-3 w-80 border p-3">
+  <body class="bg-stone-100">
+    <form action="procesar.php" method="post">
+        <div class="flex justify-center m-3 w-80 border border-white p-3 bg-white rounded-sm shadow-2xl">
           <div class="justify-center items-center">
             <!-- Para enviar le nombre  -->
         <label form="nombre">Nombre:</label>
@@ -25,9 +25,9 @@
         <input class="border" type="text" id="correo" name="correo_electronico">
         <br> <br>
         <label for="opciones">Dime tu País:</label>
-        <select name="listaDeColores" id="opciones">
-            <option value="rojo"> España</option>
-            <option value="verde">Francia</option>
+        <select name="listaDePaises" id="opciones">
+            <option value="Espania"> España</option>
+            <option value="<Francia">Francia</option>
             <option value="otro"> Portugal</option>
         </select>
         <br> <br>
@@ -48,13 +48,13 @@
         <br><br>
         <div class="col-12">
           <p>Dime una afición que tengas:<p>
-          <input type="checkbox" name="lenguajes[]" value="noticias">Noticias</input><br>
-          <input type="checkbox" name="lenguajes[]" value="promociones">Promociones</input><br>
-          <input type="checkbox" name="lenguajes[]" value="actualizaciones">Actualizaciones</input><br>
-          <input type="checkbox" name="lenguajes[]" value="eventos">Eventos</input><br>
+          <input type="checkbox" name="lenguajes[]" value="noticias"> Noticias</input><br>
+          <input type="checkbox" name="lenguajes[]" value="promociones"> Promociones</input><br>
+          <input type="checkbox" name="lenguajes[]" value="actualizaciones"> Actualizaciones</input><br>
+          <input type="checkbox" name="lenguajes[]" value="eventos"> Eventos</input><br>
         </div>
         <div class="flex justify-center">
-           <button class="justify-center border pl-10 pr-10  mt-4" type="submit">Enviar</button>
+           <button class="justify-center border pl-10 pr-10  mt-4 bg-blue-500 text-white rounded-sm" type="submit">Enviar</button>
         </div>
         </div>
     </div>
