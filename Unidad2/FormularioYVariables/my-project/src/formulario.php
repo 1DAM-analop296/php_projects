@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>my-project</title>
-    <link href="/src/style.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
   </head>
   <body class="bg-stone-100">
     <form action="procesar.php" method="post">
@@ -15,7 +15,6 @@
         <label form="nombre">Nombre:</label>
         <input class="border" type="text" id="nombre" name="nombre_usuario">
          <br> <br>
-        
          <!-- Para el apellido -->
         <label form="apellido">Apellido:</label>
         <input class="border" type="text" id="apellido" name="apellido_usuario">
