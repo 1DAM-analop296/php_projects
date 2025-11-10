@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+/* Obtener los valores de la sesión*/
+$nombre = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
+$correo = isset($_SESSION['correo_electronico']) ? $_SESSION['correo_electronico'] : '';
+$apellido = isset($_SESSION['apellido_usuario']) ? $_SESSION['apellido_usuario'] : '';
+?>
+
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,19 +25,20 @@
           <div class="justify-center items-center">
             <!-- Para enviar le nombre  -->
         <label form="nombre">Nombre:</label>
-        <input class="border" type="text" id="nombre" name="nombre_usuario">
+        <input class="border" type="text" id="nombre" name="nombre_usuario" value="<?php echo htmlspecialchars($nombre); ?>"><!-- Ponemos el echo para que guarde -->
          <br> <br>
          <!-- Para el apellido -->
         <label form="apellido">Apellido:</label>
-        <input class="border" type="text" id="apellido" name="apellido_usuario">
+        <input class="border" type="text" id="apellido" name="apellido_usuario" value="<?php echo htmlspecialchars($apellido);?>">
         <br> <br>
         <!-- Para el correoElectronico -->
         <label form="correo">Correo:</label>
-        <input class="border" type="text" id="correo" name="correo_electronico">
+        <input class="border" type="text" id="correo" name="correo_electronico" value="<?php echo htmlspecialchars($correo);?>">
         <br> <br>
+        <!-- Para el pais-->
         <label for="opciones">Dime tu País:</label>
         <select name="listaDePaises" id="opciones">
-            <option value="Espania"> España</option>
+            <option value="España"> España</option>
             <option value="<Francia">Francia</option>
             <option value="otro"> Portugal</option>
         </select>
