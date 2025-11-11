@@ -7,8 +7,6 @@ $correo = isset($_SESSION['correo_electronico']) ? $_SESSION['correo_electronico
 $apellido = isset($_SESSION['apellido_usuario']) ? $_SESSION['apellido_usuario'] : '';
 ?>
 
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -60,13 +58,14 @@ $apellido = isset($_SESSION['apellido_usuario']) ? $_SESSION['apellido_usuario']
         <br><br>
         <div class="col-12">
           <p>Dime una afición que tengas:<p>
-          <input type="checkbox" name="lenguajes[]" value="noticias"> Noticias</input><br>
-          <input type="checkbox" name="lenguajes[]" value="promociones"> Promociones</input><br>
-          <input type="checkbox" name="lenguajes[]" value="actualizaciones"> Actualizaciones</input><br>
-          <input type="checkbox" name="lenguajes[]" value="eventos"> Eventos</input><br>
+          <input type="checkbox" name="aficiones[]" value="noticias"> Noticias</input><br>
+          <input type="checkbox" name="aficiones[]" value="promociones"> Promociones</input><br>
+          <input type="checkbox" name="aficiones[]" value="actualizaciones"> Actualizaciones</input><br>
+          <input type="checkbox" name="aficiones[]" value="eventos"> Eventos</input><br>
         </div>
         <div class="flex justify-center">
            <button class="justify-center border pl-10 pr-10  mt-4 bg-blue-500 text-white rounded-sm" type="submit">Enviar</button>
+           <a href="limpiar.php" class="justify-center border pl-10 pr-10 mt-4 bg-red-500 text-white rounded-sm inline-block text-center">Limpiar</a>
         </div>
         </div>
     </div>

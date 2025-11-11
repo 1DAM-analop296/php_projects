@@ -8,7 +8,8 @@
           $nombre = $_REQUEST['nombre_usuario'];
           $pais = $_REQUEST['listaDePaises'];
           $hobbies=$_REQUEST['hobbies'];
-          $lenguajes=$_REQUEST['lenguajes'];
+          $curso = $_REQUEST['curso'];
+          $aficiones=$_REQUEST['aficiones'];
           $_SESSION['nombre_usuario'] = $nombre;
           $_SESSION['apellido_usuario'] = $apellidos;
           $_SESSION['correo_electronico'] = $correo;
@@ -46,8 +47,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
   <body class="bg-stone-100">
-    <div class="flex justify-center m-3 w-fit border border-white p-3 bg-white rounded-sm shadow-2xl">
-       <div class="justify-center items-center">
+    <div class="flex justify-center items-center m-3 w-fit border border-white p-3 bg-white rounded-sm shadow-2xl">
+       <div class="flex flex-col justify-center items-center">
         <?php
           if(!empty($errores)){
             foreach($errores as $error){
@@ -57,22 +58,35 @@
             }
             }else{
               // Mostar el nombre
-               echo "<div class='text-red-500 font-bold' role='alert'>
-                $nombre
-              </div>";
+               echo "<div class='text-red-500 font-bold''>
+                Bienvenido a est formulario $nombre
+              </div> <br><br>";
               //Mostar el apellido
-              echo "<div class='text-red-500 font-bold' role='alert'>
-                $apellidos
+              echo "<div class='text-red-500 font-bold''>
+                Tus apellidos son: $apellidos
               </div>";
               //Mostar el correo
-              echo "<div class='text-red-500 font-bold' role='alert'>
-                $correo
+              echo "<div class='text-red-500 font-bold''>
+                Tu correo electronico es el siguiente: $correo
               </div>";
               //Mostar el pais
-              echo "<div class='text-red-500 font-bold' role='alert'>
-                $pais
+              echo "<div class='text-red-500 font-bold''>
+                El pais al que pertences es: $pais
               </div>";
-            
+              //Mostar el pais
+              echo "<div class='text-red-500 font-bold''>
+                El curso al que pertences es: $curso
+              </div>";
+              //Mostar las aficiones que tienes
+              echo "<div class='text-red-500 font-bold'>"
+              . "Tus hobbies son: "
+              . implode(", ", $hobbies) /*Implode para unirlo todo en una misma linea */
+              ."</div>";
+              //Mostar las aficiones que tienes
+              echo "<div class='text-red-500 font-bold'>"
+              . "Tus aficiones son: "
+              . implode(", ", $aficiones) /*Implode para unirlo todo en una misma linea */
+              ."</div>";
           }
         ?>
       </div>
