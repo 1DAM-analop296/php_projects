@@ -15,7 +15,7 @@
             <p>Ana López Galán</p>
         </div>
         <div class="flex flex-row gap-4">
-          <a href="./Index.php">Index</a>
+          <a href="./Index.php" class="hover:bg-blue-400">Index</a>
           <a href="./sobremi.php">Sobre mí</a>
         </div>
     <div>
