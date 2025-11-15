@@ -35,10 +35,10 @@ $hobbies= array(
   </head>
   <body class="bg-stone-100">
     <?php require "Header.php"; ?>
-    <div class="grid grid-cols-3 gap-6 justify-items-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-6 justify-items-center">
         <?php
         foreach($hobbies as $key => $h){
-          echo"<div class='flex flex-col justify-center items-center border border-gray-100 shadow-2xl p-4 w-sm'>";
+          echo"<div class='flex flex-col justify-center items-center border border-gray-100 shadow-2xl p-4 max-w-sm'>";
            echo "<img class='rounded-2xl' src=".$h["imagen"]."></img>";
            echo "<p class='mt-auto'>".$h["nombre"]."</p>";
            echo "<p class='mt-auto'>".$h["descripcion"]."</p>";
