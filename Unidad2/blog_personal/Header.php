@@ -1,12 +1,3 @@
-<?php
-$datosPersonales= array(
-    "foto"=>"./img/personal.png",
-   "nombre"=>"Ana López Galán",
-    "descripcion"=>"El Betis se refiere principalmente al Real Betis Balompié, un club de fútbol español con sede en Sevilla, fundado en 1907",
-    "contacto"=>"644 84 79 35",
-)
-?>
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,29 +10,14 @@ $datosPersonales= array(
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body class="bg-stone-100">
-    <div class="flex flex-row justify-content items-center pt-4 gap-5 bord">
-      <?php
-      foreach($datosPersonales as $index=> $dp){
-       if($index=="foto"){
-         echo" <div class='flex flex-col justify-center items-center border border-gray-100 shadow-2xl p-4 rounded-xl w-sm'>";
-          echo "<img class='w-xs' src=" .$dp."></p>";
-       }
-        if ($index=="nombre"){
-           echo "<p class='text-lg'>" .$dp. "</p>";
-       }
-       if ($index=="descripcion"){
-          echo "<p class='text-sm'>" .$dp. "</p>";
-       }
-       if ($index=="contacto"){
-        
-         echo" <div class='flex flex-row justify-center items-center'>";
-            echo "<img class='w-10' src='./img/telefono.png'/>";
-            echo "<p>" .$dp.  "</p>";
-          echo "</div>";
-        echo "</div>";
-       }
-      }
-      ?>
+    <div class="flex flex-col justify-content items-center pt-4 gap-5">
+        <div class="bg-blue-200 p-3 w-full flex justify-center font-bold text-3xl"> 
+            <p>Ana López Galán</p>
+        </div>
+        <div class="flex flex-row gap-4">
+          <a href="./Index.php">Index</a>
+          <a href="./sobremi.php">Sobre mí</a>
+        </div>
     <div>
   </body>
 </html>
