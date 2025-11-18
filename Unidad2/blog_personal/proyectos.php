@@ -1,3 +1,16 @@
+<?php
+
+$dir="./PHPBasico/Respuestas";
+$contador=0;
+
+$archivos=scandir($dir);
+      foreach($archivos as $archivos){
+         $contador
+
+      }
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
