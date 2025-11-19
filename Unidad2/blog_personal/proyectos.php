@@ -1,14 +1,44 @@
 <?php
+$proyectos= array(
+    array(
+        "nombre"=>"Ejercicio 1",
+        "descripcion"=>"Una página web que muestre la fecha actual en castellano",
+        "enlace"=>"../PHPBasico/Ejercicio1.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 2",
+        "descripcion"=>"Mostrar en pantalla una tabla de 10 por 10 con los números del 1 al 100",
+        "enlace"=>"../PHPBasico/Ejercicio2.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 3",
+        "descripcion"=>"Un programa que tenga un formulario donde el usuario indica su nombre y su edad",
+        "enlace"=>"../PHPBasico/Ejercicio3.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 4",
+        "descripcion"=>"Un programa que solicite al usuario su salario mensual en bruto y la retención que tiene aplicada",
+        "enlace"=>"../PHPBasico/Ejercicio4.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 5",
+        "descripcion"=>"La programación es el proceso de crear un conjunto de instrucciones, escritas en un lenguaje de programación, para que una computadora realice tareas específicas.",
+        "enlace"=>"../PHPBasico/Ejercicio5.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 6",
+        "descripcion"=>"Un formulario con un campo de texto en el que puedas escribir números",
+        "enlace"=>"../PHPBasico/Ejercicio6.php",
+    ),
+    array(
+        "nombre"=>"Ejercicio 7",
+        "descripcion"=>"Un script PHP que solicite un texto y haciendo uso del bucle for.",
+        "enlace"=>"../PHPBasico/Ejercicio7.php",
+    ),
+   );  
 
-$dir="./PHPBasico/Respuestas";
-$contador=0;
-
-$archivos=scandir($dir);
-      foreach($archivos as $archivos){
-         $contador
-
-      }
 ?>
+
 
 
 <!doctype html>
@@ -32,40 +62,35 @@ $archivos=scandir($dir);
                <th class="border-2 p-3">Descripción</th>
                <th class="border-2 p-3">Enlace</th>
             </tr>
-            <tr class="border-2 p-3 ">
-               <td class="border-2 p-3">Ejercicio 1</td>
-               <td class="border-2 p-3 text-center">Una página web que muestre la fecha actual en castellano</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio1.php" class="hover:text-blue-700">Ejercicio Hora</a></td>
-            </tr>
-            <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 2</td>
-               <td class="border-2 p-3 text-center">Mostrar en pantalla una tabla de 10 por 10 con los números del 1 al 100</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio2.php" class="hover:text-blue-700">Ejercicio Numeros</a></td>
-            </tr>
-             <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 3</td>
-               <td class="border-2 p-3 text-center">Un programa que tenga un formulario donde el usuario indica su nombre y su edad</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio3.php" class="hover:text-blue-700">Ejercicio Nombre y Edad</a></td>
-            </tr>
-             <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 4</td>
-               <td class="border-2 p-3 text-center">Un programa que solicite al usuario su salario mensual en bruto y la retención que tiene aplicada</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio4.php" class="hover:text-blue-700">Ejercicio Salario</a></td>
-            </tr>
-             <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 5</td>
-               <td class="border-2 p-3 text-center">Un formulario con un campo de texto en el que puedas escribir números</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio5.php" class="hover:text-blue-700"> Ejercicio Numeros</a></td>
-            </tr>
-             <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 6</td>
-               <td class="border-2 p-3 text-center">Un script PHP que genere un número aleatorio entre 1 y 10, simulando una nota numérica</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio6.php" class="hover:text-blue-700">Ejercicio Aleatorios</a></td>
-            </tr>
-             <tr class="border-2">
-               <td class="border-2 p-3">Ejercicio 7</td>
-               <td class="border-2 p-3 text-center">Un script PHP que solicite un texto y haciendo uso del bucle for</td>
-               <td class="border-2 p-3 text-center"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/PHPBasico/Ejercicio7.php" class="hover:text-blue-700">Ejercicio solicitar texto</a></td>
-            </tr>
+            <?php
+               $dir="../PHPBasico/";
+               $archivos=scandir($dir);
+               foreach($archivos as $archivo){
+                  $existe=false;
+               $extension = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
+                  if ($extension == "php") {
+                     /*Recorremos el array */
+                     foreach ($proyectos as $p) {
+                     if (basename($p["enlace"]) === $archivo) {
+                        echo "<tr class='border-2 p-3'>";
+                        echo "<td class='border-2 p-3'>".$p["nombre"]."</td>";
+                        echo "<td class='border-2 p-3'>".$p["descripcion"]."</td>";
+                        echo "<td class='border-2 p-3'> <a href='".$p["enlace"]."' class='hover:text-blue-700'>Enlace ejercicio</a> </td>";
+                        echo "</tr>";
+                        $existe = true;
+                           break;
+                        }
+                     }
+                     if (!$existe) {
+                        echo "<tr class='border-2 p-3'>";
+                        echo "<td class='border-2 p-3'>".basename($archivo, ".php")."</td>";
+                        echo "<td class='border-2 p-3'>Nuevo Ejercicio</td>";
+                        echo "<td class='border-2 p-3'> <a href='".$dir.$archivo."' class='hover:text-blue-700'>Enlace ejercicio</a></td>";
+                        echo "</tr>";
+                     }
+                  }
+               }
+            ?>
+      </table>
 </div>
-</html>
+</html> 

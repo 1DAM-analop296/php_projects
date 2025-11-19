@@ -1,14 +1,3 @@
-<?php
-$datosPersonales= array(
-    "foto"=>"./img/fotoPersonal.jpg",
-   "nombre"=>"Ana López Galán",
-    "descripcion"=>"Soy una persona comprometida, responsable y orientada al aprendizaje continuo. Me gusta trabajar en equipo, asumir nuevos retos y aportar soluciones creativas a cada proyecto en el que participo.",
-    "telefono"=>"644 84 79 35",
-    "direccion"=>"Sevilla",
-    "Email"=>"analopezgalan1506@gmail.com",
-)
-?>
-
 <!doctype html>
 <html lang="en">
   <head>

@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
   <body>
-    <p class="border-2 p-3 bg-blue-300 border-stone-400 m-2 w-fit rounded-2xl"><a href="http://localhost/EjerciciosClase/php_projects/Unidad2/blog_personal/proyectos.php">Volver</a></p>
+    <p class="border-2 p-3 bg-blue-300 border-stone-400 m-2 w-fit rounded-2xl"><a href="../blog_personal/proyectos.php">Volver</a></p>
     <form action="Respuestas/respuestaEjercicio7.php" method="post">
        <div class="flex flex-col m-3">
         <label class="mt-4" form="texto">Texto:</label>

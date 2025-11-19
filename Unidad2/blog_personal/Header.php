@@ -1,6 +1,35 @@
 <?php
 /*Obtenemos el nombre la pagina que nos encontramos */
 $paginaActual = basename($_SERVER['PHP_SELF']);
+
+$cabecera= array(
+    array(
+        "nombre"=>"Index",
+        "pagina"=>"Index.php",
+        "enlace"=>"./Index.php",
+    ),
+    array(
+      "nombre"=>"Inicio",
+        "pagina"=>"Inicio.php",
+        "enlace"=>"./Inicio.php",
+    ),
+    array(
+      "nombre"=>"Sobre mí",
+        "pagina"=>"sobremi.php",
+        "enlace"=>"./sobremi.php",
+    ),
+    array(
+      "nombre"=>"Proyectos",
+        "pagina"=>"proyectos.php",
+        "enlace"=>"./proyectos.php",
+    ),
+    array(
+      "nombre"=>"Contacto",
+        "pagina"=>"Contacto.php",
+        "enlace"=>"./Contacto.php",
+    ),
+   );  
+
 ?>
 
 <!doctype html>
@@ -19,12 +48,28 @@ $paginaActual = basename($_SERVER['PHP_SELF']);
         <div class="bg-blue-200 p-3 w-full items-center flex justify-center font-bold text-3xl"> 
             <p>Ana López Galán</p>
         </div>
-        <div class="grid grid-cols-5 gap-4 w-auto justify-items-center text-2xl mt-auto">
-          <a href="./Index.php" class="hover:text-blue-400 rounded-lg <?php if($paginaActual=='Index.php'){echo 'bg-blue-200 p-3 font-bold';} ?>">Index</a>
-          <a href="./Inicio.php" class="hover:text-blue-400 rounded-lg <?php if($paginaActual=='Inicio.php'){echo 'bg-blue-200 p-3 font-bold';} ?>">Inicio</a>
-          <a href="./sobremi.php" class="hover:text-blue-400 rounded-lg <?php if($paginaActual=='sobremi.php'){echo 'bg-blue-200 p-3 font-bold';} ?>">Sobre mí</a>
-          <a href="./proyectos.php" class="hover:text-blue-400 rounded-lg <?php if($paginaActual=='proyectos.php'){echo 'bg-blue-200 p-3 font-bold';} ?>">Proyectos</a>
-          <a href="./Contacto.php" class="hover:text-blue-400 rounded-lg <?php if($paginaActual=='Contacto.php'){echo 'bg-blue-200 p-3 font-bold';} ?>">Contactos</a>
+        <div class="grid grid-flow-col auto-cols-auto gap-4 w-auto justify-items-center text-2xl mt-auto">
+          <?php
+           $dir="../blog_personal/";
+               $archivos=scandir($dir);
+               foreach($archivos as $archivo){
+                  $existe=false;
+               $extension = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
+                  if ($extension == "php") {
+                     /*Recorremos el array */
+                     foreach ($cabecera as $c) {
+                     if (basename($c["enlace"]) === $archivo) {
+                       echo "<a href='".$c["enlace"]."' class='hover:text-blue-400 rounded-lg ".($paginaActual == $c["pagina"] ? "bg-blue-200 p-3 font-bold" : "")."'>".$c["nombre"]."</a>";
+                        $existe = true;
+                           break;
+                        }
+                     }
+                     if (!$existe && strtolower($archivo) != "header.php") {
+                      echo "<a href='".$dir.$archivo."' class='hover:text-blue-400 rounded-lg ".($paginaActual == $archivo ? "bg-blue-200 p-3 font-bold" : "")."'>".basename($archivo, ".php")."</a>";
+                     }
+                  }
+               }
+          ?>
         </div>
     <div>
   </body>

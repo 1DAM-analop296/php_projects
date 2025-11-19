@@ -20,13 +20,20 @@
 
             $dir_subida = './FicherosSubidos/';
             $fichero_subido = $dir_subida . basename($_FILES['fichero_usuario']['name']);
-
-            if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)){
-               echo "<p class='rounded-2xl text-center w-auto bg-green-200 text-green-600 p-4'>
+            if($extension == "png" || $extension == "jpg" || $extension==".gif"){
+                 if(move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], $fichero_subido)){
+                     echo "<p class='rounded-2xl text-center w-auto bg-green-200 text-green-600 p-4'>
                         Datos enviados correctamente
                      </p>";
-                echo "<p class='text-lg m-3'>Se subió perfectamente.</p>";
+                     echo "<p class='text-lg m-3'>Se subió perfectamente.</p>";
             }
+            }else{
+                 echo "<p class='rounded-2xl text-center w-auto bg-red-200 text-red-600 p-4'>
+                        Datos enviados correctamente
+                     </p>";
+                     echo "<p class='text-lg m-3'>Error en el formato.</p>";
+            }
+           
         }
     }
     ?>
