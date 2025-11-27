@@ -28,6 +28,7 @@ $cabecera= array(
         "pagina"=>"Contacto.php",
         "enlace"=>"./Contacto.php",
     ),
+    
    );  
 
 ?>
