@@ -57,18 +57,11 @@ function getMunecoMarkup (){
 }
 
 function calcularPosicionNueva($posicion){
-    return [
-        'arriba' => ['row' => $posicion['row'] - 1, 
-                    'col' => $posicion['col']],
-
-        'abajo' => ['row' => $posicion['row'] + 1, 
-        '              col' => $posicion['col']],
-
-        'izquierda' => ['row' => $posicion['row'], 
-                        'col' => $posicion['col'] - 1],
-
-        'derecha' => ['row' => $posicion['row'], 
-                     'col' => $posicion['col'] + 1]
+     return [
+        'arriba' => ['row' => $posicion['row'] - 1, 'col' => $posicion['col']],
+        'abajo' => ['row' => $posicion['row'] + 1, 'col' => $posicion['col']],
+        'izquierda' => ['row' => $posicion['row'], 'col' => $posicion['col'] - 1],
+        'derecha' => ['row' => $posicion['row'], 'col' => $posicion['col'] + 1]
     ];
     
 }
