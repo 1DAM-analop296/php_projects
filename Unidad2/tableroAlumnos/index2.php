@@ -3,7 +3,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-$posicion=leerget();
+
 
 /* Zona de declaración de funciones */
 //Funciones de debugueo
@@ -43,7 +43,7 @@ function leerArchivoCSV($rutaArchivoCSV) {
 
 function leerget(){
     $posicionMuneco=[];
-    if(isset($_GET['col']) || isset($_GET['row'])){
+    if(isset($_GET['col']) && isset($_GET['row'])){
        $posicionMuneco['col']=$_GET['col'];
        $posicionMuneco['row']=$_GET['row'];
     }else{
@@ -57,8 +57,20 @@ function getMunecoMarkup (){
 }
 
 function calcularPosicionNueva($posicion){
-    $arriba=$posicion['rol']
+    return [
+        'arriba' => ['row' => $posicion['row'] - 1, 'col' => $posicion['col']],
+        'abajo' => ['row' => $posicion['row'] + 1, 'col' => $posicion['col']],
+        'izquierda' => ['row' => $posicion['row'], 'col' => $posicion['col'] - 1],
+        'derecha' => ['row' => $posicion['row'], 'col' => $posicion['col'] + 1]
+    ];
     
+}
+
+function pintarTablero($posiciones){
+    echo "<a href='?row={$posiciones['arriba']['row']}&col={$posiciones['arriba']['col']}'>Arriba</a> ";
+    echo "<a href='?row={$posiciones['abajo']['row']}&col={$posiciones['abajo']['col']}'>Abajo</a>";
+    echo "<a href='?row={$posiciones['izquierda']['row']}&col={$posiciones['izquierda']['col']}'>Izquierda</a>";
+    echo "<a href='?row={$posiciones['derecha']['row']}&col={$posiciones['derecha']['col']}'>Derecha</a>";
 }
 
 //Lógica de negocio
@@ -120,12 +132,11 @@ function calcularPosicionNueva($posicion){
 </head>
 <body>
     <h1>Tablero juego super rol DWES</h1>
-    <div>
-        <a href="">Izquierda</a>
-        <a href="">Derecha</a>
-        <a href="">Arriba</a>
-        <a href="">Abajo</a>
-    </div>
+    <?php 
+        $posicion=leerget();
+        $nuevasPosiciones=calcularPosicionNueva($posicion);
+        pintarTablero($nuevasPosiciones);
+        ?>
     <div class="contenedorTablero">
          <?php 
           $ruta="data/tablero1.csv"; 
