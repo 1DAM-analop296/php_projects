@@ -1,55 +1,10 @@
-<?php
-/* Inicialización del entorno */
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-/* Zona de declaración de funciones */
-//Funciones de debugueo
-function dump($var){
-    echo '<pre>'.print_r($var,1).'</pre>';
-}
-
-//Función lógica presentación
-function getTableroMarkup ($tablero){
-     echo "<div class='contenedorTablero'>";
-    foreach($tablero as $index=>$cell){
-        echo "<div class='tile ".$cell."'></div>";
-    }
-}
-
-//Función lógica de negocio
-function leerArchivoCSV($rutaArchivoCSV) {
-    /*Comprobamos que el existe el csv */
-    $tableroLineas =[];
-    $contador=0;
-    /*Para conocer el nombre del archivo */
-    $archivoNuevo=fopen($rutaArchivoCSV, "r");
-    while(($line=fgetcsv($archivoNuevo)) !== false){
-        foreach($line as $cell){
-            $tableroLineas[$contador]=$cell;
-             $contador++;
-        }
-    }
-    return $tableroLineas;
-}
-
-
-//Lógica de negocio
-
-//Lógica de presentación
-
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Minified version -->
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <title>Document</title>
+    <title>Juego</title>
     <style>
         .contenedorTablero {
             width:600px;
@@ -93,12 +48,8 @@ function leerArchivoCSV($rutaArchivoCSV) {
 </head>
 <body>
     <h1>Tablero juego super rol DWES</h1>
-    <div class="contenedorTablero">
-         <?php 
-         $ruta="data/tablero1.csv"; 
-          $tablero=leerArchivoCSV($ruta);
-          getTableroMarkup($tablero);
-        ?>
-    </div>
+   <?php 
+       require_once 'controlador.php';
+    ?>
 </body>
 </html>

@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$errores=0;
+
+
 /* Zona de declaración de funciones */
 //Funciones de debugueo
 function dump($var){
@@ -12,12 +15,32 @@ function dump($var){
 
 //Función lógica presentación
 function getTableroMarkup ($tablero){
-     echo "<div class='contenedorTablero'>";
-    foreach($tablero as $index=>$cell){
-        echo "<div class='tile ".$cell."'></div>";
+     global $errores;
+    $posicion=leerget();
+    $munecoIndex = $posicion['row'] * 12 + $posicion['col']; 
+    if($posicion['row']<12 && $posicion['col']<12){
+        echo "<div class='contenedorTablero'>";
+        foreach($tablero as $index=>$cell){
+        echo "<div class='tile $cell'>";
+        if ($index == $munecoIndex){
+            getMunecoMarkup();
+        }
+        echo "</div>";
+    }
+    }else{
+        $errores=2;
+        mensajesError($errores);
+    }
+
+}
+function mensajesError(){
+    global $errores;
+    if($errores==1){
+        echo "<p>No se han pasao ningun parámetro</p>";
+    }else if($errores==2){
+        echo"<p>Error la posión el mayor de la que se le asigna.</p>";
     }
 }
-
 //Función lógica de negocio
 function leerArchivoCSV($rutaArchivoCSV) {
     /*Comprobamos que el existe el csv */
@@ -28,14 +51,51 @@ function leerArchivoCSV($rutaArchivoCSV) {
     while(($line=fgetcsv($archivoNuevo)) !== false){
         foreach($line as $cell){
             $tableroLineas[$contador]=$cell;
-             $contador++;
+            $contador++;
         }
     }
     return $tableroLineas;
 }
 
+function leerget(){
+    global $errores;
+    $posicionMuneco=[];
+    if(isset($_GET['col']) && isset($_GET['row'])){
+       $posicionMuneco['col']=$_GET['col'];
+       $posicionMuneco['row']=$_GET['row'];
+    }else{
+        $errores=1;
+        mensajesError($errores);
+    }
+    return $posicionMuneco;
+}
+
+function getMunecoMarkup (){
+    echo "<img src='./src/imagen.jpg'/>";
+}
+
+function calcularPosicionBotones($posicion){
+     return [
+        'arriba' => ['row' => $posicion['row'] - 1, 'col' => $posicion['col']],
+        'abajo' => ['row' => $posicion['row'] + 1, 'col' => $posicion['col']],
+        'izquierda' => ['row' => $posicion['row'], 'col' => $posicion['col'] - 1],
+        'derecha' => ['row' => $posicion['row'], 'col' => $posicion['col'] + 1]
+    ];
+    
+}
+
+function pintarBotonesMarkup($posiciones){
+
+    echo "<a href='?row={$posiciones['arriba']['row']}&col={$posiciones['arriba']['col']}'>Arriba</a> ";
+    echo "<a href='?row={$posiciones['abajo']['row']}&col={$posiciones['abajo']['col']}'>Abajo</a>";
+    echo "<a href='?row={$posiciones['izquierda']['row']}&col={$posiciones['izquierda']['col']}'>Izquierda</a>";
+    echo "<a href='?row={$posiciones['derecha']['row']}&col={$posiciones['derecha']['col']}'>Derecha</a>";
+}
+
+
 
 //Lógica de negocio
+
 
 //Lógica de presentación
 
@@ -93,11 +153,18 @@ function leerArchivoCSV($rutaArchivoCSV) {
 </head>
 <body>
     <h1>Tablero juego super rol DWES</h1>
+    <?php 
+        $posicion=leerget();
+        $nuevasPosiciones=calcularPosicionBotones($posicion);
+        pintarBotonesMarkup($nuevasPosiciones);
+
+        ?>
     <div class="contenedorTablero">
          <?php 
-         $ruta="data/tablero1.csv"; 
+          $ruta="data/tablero1.csv"; 
           $tablero=leerArchivoCSV($ruta);
-          getTableroMarkup($tablero);
+          $posicion=leerget();
+         getTableroMarkup($tablero);
         ?>
     </div>
 </body>
