@@ -21,14 +21,14 @@
 <body>
     <header class="cabecera d-flex align-items-center justify-content-center p-4">      
         <div class="flex flex-column">
-            <div class="flex flex-row">
+            <div class="flex flex-row items-center justify-center mb-5">
                 
-            <img src="./img/logo_tareas.png" class="img-fluid logo me-2" alt="Logo IES">
+            <img src="../img/logo_tareas.png" class="img-fluid logo me-2" alt="Logo IES">
             <h1 class="titulo" class="text-xl font-bold">Kanban de tareas</h1>
             </div>
             <div class="flex flex-row gap-6">
-                <div class="">
-                    <p class="pr-20 pl-20 bg-red-600 text-white font-bold">TO DO</p>
+                <div class="w-full md:w-1/2 lg:w-1/3">
+                    <p class="px-4 md:px-20 bg-red-600 text-white font-bold text-center mb-4 rounded-xl pt-2 pb-2">TO DO</p>
                     <?php
                         require 'data.php';
                         $tareas_toDo=[];
@@ -39,16 +39,24 @@
                             } 
                         }
                          forEach($tareas_toDo as $tarea){
-                          echo "<div class='p-3 flex flex-column border rounded-xl mb-3 w-sm>";
-                          echo"<p class='boder rounded-xl'>".$tarea['fecha_entrega']."</p>";
-                          echo"<p class='font-bold'>".$tarea['titulo']."</p>";
-                          echo"<p>".$tarea['descripcion']."</p>";
-                          echo "</div>";
+                         
+                            echo "<div class='p-3 flex flex-col border-2 border-red-200 rounded-xl mb-3 pb-1'>";
+                            echo "<div class='flex flex-row w-full border-b-2 border-gray-400 justify-between mb-2 pb-1'>";
+                                echo "<p >".$tarea['fecha_entrega']."</p>";
+                                echo "<div class='flex flex-row gap-3'>";
+                                echo " <img src='../img/editar.png' class='w-5 h-5'>";
+                                echo " <img src='../img/papelera.png' class='w-5 h-5'>";
+                                echo "</div>";
+                            echo "</div>";
+                           
+                            echo "<p class='font-bold mb-1'>".$tarea['titulo']."</p>";
+                            echo "<p>".$tarea['descripcion']."</p>";
+                            echo "</div>";
                          }
                     ?>
                 </div>
-                <div>
-                    <p class="pr-20 pl-20 bg-yellow-300 text-black font-bold">DOING</p>
+                <div class="w-full md:w-1/2 lg:w-1/3">
+                    <p class="px-4 md:px-20 bg-yellow-300 text-black font-bold text-center mb-4 rounded-xl pt-2 pb-2">DOING</p>
                  <?php
                         forEach($resultado_tareas as $tarea){
                             if ($tarea['estado'] == 'doing') {
@@ -56,16 +64,23 @@
                             } 
                         }
                          forEach($tareas_doing as $tarea){
-                          echo "<div class='p-3 flex flex-column border rounded-xl mb-3 w-sm'>";
-                          echo"<p class='boder rounded-xl'>".$tarea['fecha_entrega']."</p>";
+                         
+                          echo "<div class='p-3 flex flex-column border-2 border-yellow-200 rounded-xl mb-3'>";
+                         echo "<div class='flex flex-row w-full border-b-2 border-gray-400 justify-between mb-2 pb-1'>";
+                                echo "<p>".$tarea['fecha_entrega']."</p>";
+                                echo "<div class='flex flex-row gap-3'>";
+                                echo " <img src='../img/editar.png' class='w-5 h-5'>";
+                                echo " <img src='../img/papelera.png' class='w-5 h-5'>";
+                                echo "</div>";
+                            echo "</div>";
                           echo"<p class='font-bold'>".$tarea['titulo']."</p>";
                           echo"<p>".$tarea['descripcion']."</p>";
                           echo "</div>";
                          }
                     ?>
                 </div>
-                <div>
-                     <p class="pr-20 pl-20 bg-green-600 text-white font-bold">DONE</p>
+                <div class="w-full md:w-1/2 lg:w-1/3">
+                     <p class="px-4 md:px-20 bg-green-600 text-white font-bold text-center mb-4 rounded-xl pt-2 pb-2">DONE</p>
                       <?php
                         forEach($resultado_tareas as $tarea){
                             if ($tarea['estado'] == 'done') {
@@ -73,8 +88,14 @@
                             } 
                         }
                          forEach($tareas_done as $tarea){
-                          echo "<div class='p-3 flex flex-column border rounded-xl mb-3 md:w-sm lg:w-100'>";
-                          echo"<p class='boder rounded-xl'>".$tarea['fecha_entrega']."</p>";
+                          echo "<div class='p-3 flex flex-column border-2 border-green-200 rounded-xl mb-3'>";
+                           echo "<div class='flex flex-row w-full border-b-2 border-gray-400 justify-between mb-2 pb-1'>";
+                                echo "<p>".$tarea['fecha_entrega']."</p>";
+                                echo "<div class='flex flex-row gap-3'>";
+                                echo " <img src='../img/editar.png' class='w-5 h-5'>";
+                                echo " <img src='../img/papelera.png' class='w-5 h-5'>";
+                                echo "</div>";
+                            echo "</div>";
                           echo"<p class='font-bold'>".$tarea['titulo']."</p>";
                           echo"<p>".$tarea['descripcion']."</p>";
                           echo "</div>";
