@@ -34,6 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
     }
     
 }
+
+/*Recogemos la información para eliminar la tarea */
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_eliminar'])){
+        
+    }
+
 require 'header.php';
 
 $tareas_doing = [];
@@ -86,6 +92,8 @@ foreach($resultado_tareas as $tarea) {
                                         <path d="M16 5l3 3" />
                                     </svg>
                                 </button>
+                            </form>
+                            <form action="" method="post">
                                 <button type="submit" class="btn" name="btn_eliminar">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
                                         <path d="M4 7l16 0"></path>
@@ -114,7 +122,7 @@ foreach($resultado_tareas as $tarea) {
                     <div class="card border-warning mb-3">
                     <div class="card-header d-flex align-items-center justify-content-between">
                             <span>Entrega: <?=$tarea['fecha_entrega']; ?></span>
-                            <form action="" method="post">
+                            <form action="edit_tarea.php" method="post">
                                 <input type="hidden" name="tarea_id" value="<?= $tarea['id']; ?>">
                                 <button type="submit" class="btn" name="btn_modificar">
                                     <svg
@@ -132,6 +140,8 @@ foreach($resultado_tareas as $tarea) {
                                         <path d="M16 5l3 3" />
                                     </svg>
                                 </button>
+                            </form>
+                            <form action="" method="post">
                                 <button type="submit" class="btn" name="btn_eliminar">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
                                         <path d="M4 7l16 0"></path>
@@ -160,7 +170,7 @@ foreach($resultado_tareas as $tarea) {
                     <div class="card border-success mb-3">
                     <div class="card-header d-flex align-items-center justify-content-between">
                             <span>Entrega: <?= $tarea['fecha_entrega']; ?></span>
-                            <form action="" method="post">
+                            <form action="edit_tarea.php" method="post">
                                 <input type="hidden" name="tarea_id" value="<?= $tarea['id']; ?>">
                                 <button type="submit" class="btn" name="btn_modificar">
                                     <svg
@@ -178,6 +188,8 @@ foreach($resultado_tareas as $tarea) {
                                         <path d="M16 5l3 3" />
                                     </svg>
                                 </button>
+                            </form>
+                            <form action="" method="post">
                                 <button type="submit" class="btn" name="btn_eliminar">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
                                         <path d="M4 7l16 0"></path>
