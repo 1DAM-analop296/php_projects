@@ -8,8 +8,9 @@
 
 
 <?php
+
 require 'data.php';
-require 'header.php';
+require 'conexion.php';
 
 // Verificar si el usuario está logueado, de lo contrario redirigir a login.php
 //session_start();
@@ -18,23 +19,7 @@ require 'header.php';
     exit();
 }*/
 
-$tareas_doing = [];
-$tareas_toDo = [];
-$tareas_done = [];
-$resultado_tareas = getTareas($db, $_SESSION['id_user']);
-foreach($resultado_tareas as $tarea) {
-    if ($tarea['estado'] == 'done') {
-        //$tareas_done[] = $tarea;
-        array_push($tareas_done, $tarea);
-    } else if ($tarea['estado'] == 'doing') {
-        //$tareas_doing[] = $tarea;
-        array_push($tareas_doing, $tarea);
-    } else {
-        //$tareas_toDo[] = $tarea;
-        array_push($tareas_toDo, $tarea);
-    }
-}
-
+session_start(); 
 //RECOGEMOS LA INFORMACIÓN DEL FORMULARIO PARA INSERTAR.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
     $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
@@ -43,9 +28,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
     $estado=isset($_POST["estado"]) ? $_POST["estado"] : false;
     $id_user=$_SESSION['id_user'];
 
-    $check_insertar= insertarTarea($db, $titulo, $descripcion, $fecha_entrega, $estado, $id_user);
+    $check_insertar= insertarTarea($conn, $titulo, $descripcion, $fecha_entrega, $estado, $id_user);
     if($check_insertar){
         header('Location: index.php');
+         exit();
+    }
+    
+}
+require 'header.php';
+
+$tareas_doing = [];
+$tareas_toDo = [];
+$tareas_done = [];
+$resultado_tareas = getTareas($conn);
+foreach($resultado_tareas as $tarea) {
+    if ($tarea['estado'] == 'done') {
+        $tareas_done[] = $tarea;
+    } else if ($tarea['estado'] == 'doing') {
+        $tareas_doing[] = $tarea;
+    } else {
+        $tareas_toDo[] = $tarea;
     }
 }
 
@@ -67,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
                     <div class="card border-danger mb-3">
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <span>Entrega: <?= $tarea['fecha_entrega']; ?></span>
-                            <form action="edit_tarea" method="post">
+                            <form action="edit_tarea.php" method="post">
                                 <input type="hidden" name="tarea_id" value="<?= $tarea['id']; ?>">
                                 <button type="submit" class="btn" name="btn_modificar">
                                     <svg

@@ -33,7 +33,7 @@ if (isset($_POST['guardarCambios'])) {
         </form>
     </div>
 
-    <form id="editTarea" method="post" action="" class="p-3 border rounded shadow bg-white">
+    <form id="editTarea" method="post" action="index.php" class="p-3 border rounded shadow bg-white">
         <input type="hidden" name="id_tarea" value="<?= $tarea_editar[0]['id']; ?>">
 
         <!-- Campo de Título -->
