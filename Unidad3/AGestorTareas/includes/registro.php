@@ -51,10 +51,11 @@ if (isset($_POST["registro"])) {
 
     if (count($errores) == 0) {
         //INSERTAR USUARIO EN LA TABLA DE USUARIOS DE LA BB
-        
-        $check_registro = guardarNuevoUsuario($nombre, $email, $password, $db);       
+        $hahed=password_hash($password,PASSWORD_DEFAULT);
+
+        $check_registro = guardarNuevoUsuario($nombre, $email, $hahed, $conn);       
         if ($check_registro){
-            header("login.php");
+            header("Location: login.php");
         }
         
     } else {

@@ -13,8 +13,7 @@ session_start();
 require 'data.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["logout"])&& isset($_POST["username"])) {
 
-    $array_usuarios = getUsers($db);
-    //session_start();
+    $array_usuarios = getUsers($conn);
 
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -22,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["logout"])&& isset($_P
     $notFound = false;
     foreach ($array_usuarios as $user) {
         // Verificar credenciales
-        if ($username == $user['email'] && password_verify($password, $user['contraseña'])) {
+        if ($username == $user['email'] && password_verify($password, $user['contrasenia'])) {
             $_SESSION['username'] = $username;
             $_SESSION['password'] = $password;
             $_SESSION['id_user'] = $user['id'];

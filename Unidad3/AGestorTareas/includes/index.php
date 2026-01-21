@@ -13,13 +13,12 @@ require 'data.php';
 require 'conexion.php';
 
 // Verificar si el usuario está logueado, de lo contrario redirigir a login.php
-//session_start();
-/*if (!isset($_SESSION['username'])) {
+session_start();
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
-}*/
+}
 
-session_start(); 
 //RECOGEMOS LA INFORMACIÓN DEL FORMULARIO PARA INSERTAR.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
     $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;

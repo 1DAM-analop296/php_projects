@@ -3,12 +3,12 @@ require_once 'data.php';
 require_once 'header.php';
 
 // Verificar si el usuario está logueado, de lo contrario redirigir a login.php
-/*session_start();
+session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
-*/
+
 $tarea_editar=[];
 if (isset($_POST['tarea_id'])) {
   //Obtener la información de la tarea que queremos editar -> getTareas
@@ -24,7 +24,6 @@ if (isset($_POST['guardarCambios'])) {
 }
 
 ?>
-
 
 <body>
     <div class="d-flex justify-content-end m-2">

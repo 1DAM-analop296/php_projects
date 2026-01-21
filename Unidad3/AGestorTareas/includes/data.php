@@ -1,5 +1,6 @@
 <?php
 require 'conexion.php';
+
 function getTareas($db){
     $sql="SELECT id, titulo, descripcion, fecha_entrega, estado FROM tareas t";
     $tareas=mysqli_query($db, $sql);
@@ -13,23 +14,47 @@ function getTareas($db){
     }
     return $resultado;
 }
-function guardarCambiosTarea($db, $id_tarea, $titulo,  $descripcion,  $fecha_entrega, $estado, $id_user){
-	$sql = "UPDATE tareas 
-            SET titulo = ?, descripcion = ?, fecha_entrega = ?, estado = ?, id_user = ?
-            WHERE id = ?";
 
-    $stmt = mysqli_prepare($db, $sql);
-    mysqli_stmt_bind_param(
-        $stmt,
-        "ssssii",
-        $titulo,
-        $descripcion,
-        $fecha_entrega,
-        $estado,
-        $id_user,
-        $id_tarea
-    );
+/*Función de creación de usuarios */
+function guardarNuevoUsuario($nombre, $email, $password, $db){
+    $date=date("o-m-d H-i-s");
 
-    return mysqli_stmt_execute($stmt);
+
+    /*SQL para insertar un registro cuando se trata de un string tenemos que ponerlo con comillas simples*/
+	$sql="INSERT INTO usuarios(nombre, email, contrasenia, creado_el) VALUES('$nombre', '$email', '$password', '$date')";
+
+    /*Ejecutamos la consulta devolvemos true o false depende de si se ha introducido o no */
+    if(mysqli_query($db, $sql)){
+        return true;
+    }else{
+        return false;
+    }
+
 }
+/*Función de para saber los usuarios que tenemos*/
+function getUsers($db){
+    $sql="SELECT id, nombre, email, contrasenia, creado_el FROM usuarios u";
+    $usuarios=mysqli_query($db, $sql);
+    /*Comprobamos que exista mas de un usuario */
+    if(mysqli_num_rows($usuarios)>0){
+        while($usuario=mysqli_fetch_assoc($usuarios)){
+            array_push($resultado,$usuario);
+        } 
+    }
+
+   return $resultado;
+}
+
+
+function insertarTarea($db, $titulo, $descripcion, $fecha_entrega, $estado, $id_user)
+{
+	
+}
+
+
+
+function eliminarTarea($db, $id_tarea){
+	//TODO
+}
+
 ?>
