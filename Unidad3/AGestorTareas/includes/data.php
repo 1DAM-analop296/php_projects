@@ -1,8 +1,9 @@
 <?php
 require 'conexion.php';
 
-function getTareas($db){
-    $sql="SELECT id, titulo, descripcion, fecha_entrega, estado FROM tareas t";
+function getTareas($db, $id_usuario){
+    /*Añadimos el id del usuario que sea*/
+    $sql="SELECT id, titulo, descripcion, fecha_entrega, estado FROM tareas t WHERE usuario_id=$id_usuario";
     $tareas=mysqli_query($db, $sql);
 
     $resultado=array();
@@ -74,4 +75,53 @@ function eliminarTarea($db, $id_tarea){
     }
     return $check;
 }
+
+
+function hola($db, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $id_user){
+    
+    $check=false;
+    $sqlInsert="UPDATE tareas SET 
+    id='$id_tarea'
+    descripcion='$descripcion'
+    fecha_entrega='$fecha_entrega'
+    estado='$estado'
+    WHERE id=$id_tarea";
+    $query=mysqli_query($db, $sqlInsert);
+
+     
+    
+    if($query){
+        $check=true;
+    }
+    return $check;
+
+   
+}
+function guardarCambiosTarea(mysqli $conn, int $id_tarea, string $titulo, string $descripcion, string $fecha_entrega, string $estado): bool {
+    $stmt = $conn->prepare("UPDATE tareas SET titulo = ?, descripcion = ?, fecha_entrega = ?, estado = ? WHERE id = ?");
+    $stmt->bind_param("ssssi", $titulo, $descripcion, $fecha_entrega, $estado, $id_tarea);
+
+    return $stmt->execute();
+}
+
+function getTareaId($db, $id_tarea){
+	$check=false;
+    $sql="SELECT id, titulo, descripcion, fecha_entrega, estado FROM tareas t WHERE id=$id_tarea";
+
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
+}
+
 ?>
+
+
+
+

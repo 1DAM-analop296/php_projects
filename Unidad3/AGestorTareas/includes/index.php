@@ -37,15 +37,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevaTarea'])) {
 
 /*Recogemos la información para eliminar la tarea */
     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btn_eliminar'])){
-        
+       $id = $_POST['tarea_id'];
+        $check_eliminar= eliminarTarea($conn, $id);
+        if($check_eliminar){
+            header('Location: index.php');
+            exit();
+        }else {
+         var_dump($check_eliminar);
+        }
+      
     }
+
 
 require 'header.php';
 
 $tareas_doing = [];
 $tareas_toDo = [];
 $tareas_done = [];
-$resultado_tareas = getTareas($conn);
+$resultado_tareas = getTareas($conn, $_SESSION['id_user']);
 foreach($resultado_tareas as $tarea) {
     if ($tarea['estado'] == 'done') {
         $tareas_done[] = $tarea;
@@ -75,6 +84,7 @@ foreach($resultado_tareas as $tarea) {
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <span>Entrega: <?= $tarea['fecha_entrega']; ?></span>
                             <form action="edit_tarea.php" method="post">
+                                 <!-- Añadimos un imput supoer importante para modificar -->
                                 <input type="hidden" name="tarea_id" value="<?= $tarea['id']; ?>">
                                 <button type="submit" class="btn" name="btn_modificar">
                                     <svg
@@ -93,8 +103,10 @@ foreach($resultado_tareas as $tarea) {
                                     </svg>
                                 </button>
                             </form>
-                            <form action="" method="post">
+                            <form action="index.php" method="post">
                                 <button type="submit" class="btn" name="btn_eliminar">
+                                   <!-- Añadimos un imput supoer importante para eliminar -->
+                                      <input type="hidden" name="tarea_id" value="<?= $tarea['id']; ?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
                                         <path d="M4 7l16 0"></path>
                                         <path d="M10 11l0 6"></path>

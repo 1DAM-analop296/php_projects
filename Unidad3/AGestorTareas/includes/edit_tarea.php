@@ -1,4 +1,5 @@
 <?php
+
 require_once 'data.php';
 require_once 'header.php';
 
@@ -10,18 +11,42 @@ if (!isset($_SESSION['username'])) {
 }
 
 $tarea_editar=[];
-if (isset($_POST['tarea_id'])) {
+// if (isset($_POST['tarea_id'])) {
   //Obtener la información de la tarea que queremos editar -> getTareas
-} else {
-    header('index.php');
-}
+  $tarea_editar=getTareaId($conn, $_POST['tarea_id']);
+  /*Para mostrar la informacion del campo */
+  //var_dump($tarea_editar);
+  
+// } else {
+    // header('index.php');
+// }
 
-if (isset($_POST['guardarCambios'])) {
-    //Recogemos toda la información de las tareas del formulario.
-  
-    //Llamamos a nuestro guardarCambiosTarea.
-  
-}
+               
+
+
+ /*Modificamos las tareas */
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardarCambios'])) {
+         var_dump("HOLA");
+
+		//Recogemos toda la información de las tareas del formulario.
+        $id_tarea = $_POST['tarea_id'];
+        $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
+        $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : false;
+        $fecha_entrega = isset($_POST["fecha_entrega"]) ? $_POST["fecha_entrega"] : false;
+        $estado=isset($_POST["estado"]) ? $_POST["estado"] : false;
+        $id_user=$_SESSION['id_user'];
+		//Llamamos a nuestro guardarCambiosTarea.
+        if(!$titulo && !$descripcion &&  !$fecha_entrega && !$estado && !$id_user && !$id_tarea){
+            $check_actualizar= guardarCambiosTarea($conn, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $id_user);
+            if($check_actualizar){
+                
+                // header('Location: index.php');
+                // exit();
+            }else {
+                var_dump($check_actualizar);
+            }
+        }
+	}
 
 ?>
 
@@ -36,33 +61,34 @@ if (isset($_POST['guardarCambios'])) {
         <input type="hidden" name="id_tarea" value="<?= $tarea_editar[0]['id']; ?>">
 
         <!-- Campo de Título -->
+         <!-- Para añadirle la infromacion en el texto se lo ponemos con el tarea_editar -->
         <div class="mb-3">
             <label for="titulo" class="form-label fw-bold">Título</label>
             <input type="text" class="form-control form-control-lg" id="titulo" name="titulo"
-                value="" placeholder="Escribe el título de la tarea" required>
+                value="<?= $tarea_editar[0]['titulo']; ?>" placeholder="Escribe el título de la tarea" required>
         </div>
 
         <!-- Campo de Descripción -->
         <div class="mb-3">
             <label for="descripcion" class="form-label fw-bold">Descripción</label>
             <textarea class="form-control form-control-lg" id="descripcion" name="descripcion" rows="4"
-                placeholder="Describe la tarea" required></textarea>
+                 placeholder="Describe la tarea" required><?= $tarea_editar[0]['descripcion']; ?> </textarea>
         </div>
 
         <!-- Campo de Fecha de Entrega -->
         <div class="mb-3">
             <label for="fecha_entrega" class="form-label fw-bold">Fecha de Entrega</label>
             <input type="date" class="form-control form-control-lg" id="fecha_entrega" name="fecha_entrega"
-                value="" required>
+                value="<?= $tarea_editar[0]['fecha_entrega']; ?>"required>
         </div>
 
         <!-- Campo de Estado -->
         <div class="mb-3">
             <label for="estado" class="form-label fw-bold">Estado</label>
             <select class="form-select form-select-lg" id="estado" name="estado" required>
-                <option value="to_do">Pendiente</option>
-                <option value="doing">En progreso</option>
-                <option value="done">Completada</option>
+                <option value="to_do"  <?= $tarea_editar[0]['estado']  === "to_do" ? 'selected' :  ''?>>Pendiente</option>
+                <option value="doing"  <?= $tarea_editar[0]['estado']  === "doing" ? 'selected' :  ''?>>En progreso</option>
+                <option value="done"  <?= $tarea_editar[0]['estado'] === "done" ? 'selected' :  ''?>>Completada</option>
             </select>
         </div>
 
