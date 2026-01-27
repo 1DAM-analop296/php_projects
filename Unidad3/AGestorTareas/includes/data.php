@@ -77,16 +77,18 @@ function eliminarTarea($db, $id_tarea){
 }
 
 
-function hola($db, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $id_user){
+function actualizarDatos($db, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $id_user){
     
     $check=false;
-    $sqlInsert="UPDATE tareas SET 
-    id='$id_tarea'
-    descripcion='$descripcion'
-    fecha_entrega='$fecha_entrega'
-    estado='$estado'
-    WHERE id=$id_tarea";
-    $query=mysqli_query($db, $sqlInsert);
+   
+   $sql = "UPDATE tareas SET 
+        titulo='$titulo',
+        descripcion='$descripcion',
+        fecha_entrega='$fecha_entrega',
+        estado='$estado'
+        WHERE id='$id_tarea'";
+
+    $query=mysqli_query($db, $sql);
 
      
     
@@ -95,7 +97,6 @@ function hola($db, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $i
     }
     return $check;
 
-   
 }
 function guardarCambiosTarea(mysqli $conn, int $id_tarea, string $titulo, string $descripcion, string $fecha_entrega, string $estado): bool {
     $stmt = $conn->prepare("UPDATE tareas SET titulo = ?, descripcion = ?, fecha_entrega = ?, estado = ? WHERE id = ?");

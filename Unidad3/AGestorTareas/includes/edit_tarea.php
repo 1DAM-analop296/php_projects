@@ -13,7 +13,7 @@ if (!isset($_SESSION['username'])) {
 $tarea_editar=[];
 // if (isset($_POST['tarea_id'])) {
   //Obtener la información de la tarea que queremos editar -> getTareas
-  $tarea_editar=getTareaId($conn, $_POST['tarea_id']);
+  
   /*Para mostrar la informacion del campo */
   //var_dump($tarea_editar);
   
@@ -22,32 +22,30 @@ $tarea_editar=[];
 // }
 
                
-
+ 
 
  /*Modificamos las tareas */
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guardarCambios'])) {
-         var_dump("HOLA");
-
 		//Recogemos toda la información de las tareas del formulario.
-        $id_tarea = $_POST['tarea_id'];
+        $id_tarea = $_POST['id_tarea'];
         $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
         $descripcion = isset($_POST["descripcion"]) ? $_POST["descripcion"] : false;
         $fecha_entrega = isset($_POST["fecha_entrega"]) ? $_POST["fecha_entrega"] : false;
         $estado=isset($_POST["estado"]) ? $_POST["estado"] : false;
         $id_user=$_SESSION['id_user'];
 		//Llamamos a nuestro guardarCambiosTarea.
-        if(!$titulo && !$descripcion &&  !$fecha_entrega && !$estado && !$id_user && !$id_tarea){
-            $check_actualizar= guardarCambiosTarea($conn, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado, $id_user);
+        if ($titulo && $descripcion && $fecha_entrega && $estado && $id_tarea) {
+            $check_actualizar= actualizarDatos($conn, $id_tarea, $titulo, $descripcion, $fecha_entrega, $estado,  $id_user);
+            
             if($check_actualizar){
-                
-                // header('Location: index.php');
-                // exit();
+                header('Location: index.php');
+                exit();
             }else {
                 var_dump($check_actualizar);
             }
         }
 	}
-
+   $tarea_editar=getTareaId($conn, $_POST['tarea_id']);
 ?>
 
 <body>
@@ -57,7 +55,7 @@ $tarea_editar=[];
         </form>
     </div>
 
-    <form id="editTarea" method="post" action="index.php" class="p-3 border rounded shadow bg-white">
+    <form id="editTarea" method="post" action="" class="p-3 border rounded shadow bg-white">
         <input type="hidden" name="id_tarea" value="<?= $tarea_editar[0]['id']; ?>">
 
         <!-- Campo de Título -->
