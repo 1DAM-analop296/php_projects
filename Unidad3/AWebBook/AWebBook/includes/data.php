@@ -46,4 +46,35 @@ function getUsers($db){
    return $resultado;
 }
 
+
+
+function getCategorias($db){
+    $sql="SELECT id_categoria, nombre FROM categorias c";
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
+}
+
+function getLibrosPorCategoria($id_categoria){
+
+    $sql="SELECT libros.id_libro, libros.titulo, libros.autor, libros.id_categoria, libros.disponible, libros.imagen, categorias.nombre FROM libros JOIN categorias ON categorias.id_categoria=libros.id_categoria
+    WHERE categorias.nombre=$id_categoria";
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
+}
 ?>

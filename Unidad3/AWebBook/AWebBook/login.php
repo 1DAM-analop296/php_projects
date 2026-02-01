@@ -22,9 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["logout"])&& isset($_P
     foreach ($array_usuarios as $user) {
         // Verificar credenciales
         if ($username == $user['email'] && password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
-            $_SESSION['id_user'] = $user['id'];
+               // Guardamos datos en sesión
+                $_SESSION['id_usuario'] = $user['id_usuario'];
+                $_SESSION['usuario_nombre'] = $user['nombre_usuario'];
+                $_SESSION['is_admin'] = $user['is_admin'];
+
 
             // Redirigir a la página de alumnos matriculados
             header("Location: index.php");
