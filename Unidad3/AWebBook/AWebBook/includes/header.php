@@ -1,3 +1,18 @@
+<?php
+    if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    } 
+    /*Apunta a la carpeta del archivo actual */
+    require __DIR__ . '/conexion.php';
+
+    if (isset($_POST['cerrarSesion'])) {
+        $_SESSION = [];
+        session_destroy();
+        header("Location: index.php"); 
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,10 +39,15 @@
 
 <body>
     <div class="bg-warning-subtle">
-        <form class="d-flex justify-content-end p-2" action="login.php" method="post">
-            <input type='hidden' name='logout' value='salir'>
-            <button type="submit" class="btn btn-dark">Iniciar sesión</button>
-        </form>
+        <div class="d-flex justify-content-end p-2" action="login.php" method="post">
+            <?php if (isset($_SESSION['id_usuario'])): ?>
+                <form action="" method="post" class="d-inline">
+                    <button type="submit" name="cerrarSesion" class="btn btn-dark">Cerrar Sesión</button>
+                </form>
+                <?php else: ?>
+                 <a href="login.php" class="btn btn-dark">Iniciar Sesión</a>
+            <?php endif; ?>
+        </div>
         <header class="cabecera d-flex align-items-center justify-content-center p-4">
             <img src="./img/logo-biblio.png" class="img-fluid logo me-2" alt="Logo IES">
             <h1 class="titulo">Bienvenido a la Biblioteca Virtual</h1>

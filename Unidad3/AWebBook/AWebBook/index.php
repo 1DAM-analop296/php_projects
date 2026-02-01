@@ -1,10 +1,13 @@
 <?php
-session_start(); 
-
 require './includes/data.php';
 require './includes/header.php';
 require './includes/conexion.php';
 //$resultado_libros_Categoria=getLibrosPorCategoria();
+
+/*Obtenemos el id de nuestro usuario */
+if (isset($_SESSION['id_usuario'])) {
+    $id_usuario = $_SESSION['id_usuario'];
+} 
  
 
 $resultado_libros = getTareas($conn);
@@ -59,17 +62,23 @@ $resultado_categorias=getCategorias($conn);
                     </p>
                     <div class="mt-auto">
                         <?php
-                        $texto = ($libro['disponible'] == 0) ? 'No reservado' : 'Reservado';
+                        $texto = ($libro['disponible'] == 0) ? 'No disponible' : 'Reservar';
                         $clase = ($libro['disponible'] == 0) ? 'btn-secondary' : 'btn-primary';
                         ?>
-                        <button
-                            type="button"
-                            class="btn <?= $clase ?> w-100"
-                            onclick="<?= isset($_SESSION['id_usuario'])
-                            ? 'return false;' 
-                            : "window.location.href='./login.php'" ?>">
-                            <?= $texto ?>
-                        </button>
+                       <form action="reserva.php" method="post" class="d-inline">
+                        <input type="hidden" name="id_libro" value="<?= $libro['id_libro']; ?>">
+                        
+                        <?php if(isset($_SESSION['id_usuario'])): ?>
+                            <button type="submit" name="resevar" class="btn <?= $clase ?> w-100">
+                                <?= $texto ?>
+                            </button>
+                        <?php else: ?>
+                            <button type="button" class="btn <?= $clase ?> w-100"
+                                    onclick="window.location.href='./login.php'">
+                                <?= $texto ?>
+                            </button>
+                        <?php endif; ?>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -98,8 +107,25 @@ $resultado_categorias=getCategorias($conn);
 
 <script>
 function registrarLibro() {
-    alert('Aquí va la función para registrar el libro');
-    // Aquí pondrías tu código real para reservar el libro
+    // if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['resevar'])){
+    //    $id = $_POST['id_libro'];
+    //    /*Obtenemos el libro por el id */
+    //    $libro=getObtenerLibroId($conn,$id);
+    //     if($libro && $libro['disponible'] > 0){
+    //         /*Insertamos en la tabla de reservas */
+    //         $check_insertar=$getInsertarReserva($conn,$id_usuario,$id);
+    //         /*Actualizamos tambien el libro*/
+    //         $sql_update = "UPDATE libros SET disponible = disponible - 1 WHERE id_libro = $id";
+    //         mysqli_query($conn, $sql_update);
+    //         if($check_insertar){
+    //             header('Location: reserva.php');
+    //             exit();
+    //         }
+            
+    //     }
+      
+    // }
+    
 }
 </script>
 </body>
