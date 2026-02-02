@@ -66,7 +66,7 @@ function getCategorias($db){
 
 function getLibrosPorCategoria($id_categoria){
 
-    $sql="SELECT libros.id_libro, libros.titulo, libros.autor, libros.id_categoria, libros.disponible, libros.imagen, categorias.nombre FROM libros JOIN categorias ON categorias.id_categoria=libros.id_categoria
+    $sql="SELECT categorias.nombre FROM libros JOIN categorias ON categorias.id_categoria=libros.id_categoria
     WHERE categorias.nombre=$id_categoria";
     $tareas=mysqli_query($db, $sql);
 
@@ -80,20 +80,20 @@ function getLibrosPorCategoria($id_categoria){
     return $resultado;
 }
 
-function getDevolverCategoria($db, $id_categoria){
-     $sql = "SELECT categorias.nombre 
-            FROM categorias 
-            WHERE categorias.id_categoria = $id_categoria"; 
-    $resultado = mysqli_query($db, $sql);
+function getLIbrosId($db, $id_libro){
+    /*Añadimos el id del usuario que sea*/
+    $sql="SELECT libros.id_libro, libros.titulo, libros.autor, libros.id_categoria, libros.disponible, libros.imagen, categorias.nombre AS categoria FROM libros JOIN categorias ON categorias.id_categoria=libros.id_categoria";
+    $tareas=mysqli_query($db, $sql);
 
-    if(mysqli_num_rows($resultado) > 0){
-        $fila = mysqli_fetch_assoc($resultado);
-        return $fila['nombre']; 
-    } else {
-        return ''; 
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
     }
+    return $resultado;
 }
-
 function getObtenerLibroId($db, $id_libro){
     $sql="SELECT libros.id_libro, libros.titulo, libros.autor, libros.id_categoria, libros.disponible, libros.imagen, categorias.nombre FROM libros JOIN categorias ON categorias.id_categoria=libros.id_categoria
     WHERE libros.id_libro=$id_libro";
@@ -110,15 +110,33 @@ function getObtenerLibroId($db, $id_libro){
 }
 
 
-function getInsertarReserva($db, $id_usuario, $id_libro){
-    $date=date("o-m-d H-i-s");
-    $sql="INSERT INTO reservas (id_usuario, id_libro, fecha_reserva) VALUES ('$id_usuario','$id_libro','$descripcion','$date')";
+function getInsertarReserva($db, $id_usuario, $id_libro, $date){
+    $date=date('Y-m-d');
+    $sql="INSERT INTO reservas (id_usuario, id_libro, fecha_reserva) VALUES ($id_usuario,$id_libro, $date)";
     /*Mandamos un boolean según si se ha podido insertar las usuarios. */
     if(mysqli_query($db, $sql)){
         return true;
     }else{
         return false;
     }
+}
+
+function devolverReservas($db, $id_usuario){
+
+    $sql="SELECT reservas.id_reserva, reservas.id_usuario, reservas.id_libro, reservas.fecha_reserva, libros.titulo AS nombreLibros FROM reservas  
+    JOIN libros ON libros.id_libro=reservas.id_libro
+    WHERE reservas.id_usuario=$id_usuario";
+
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
 }
 
 

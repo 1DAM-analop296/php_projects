@@ -32,11 +32,12 @@ $resultado_categorias=getCategorias($conn);
     <div class="d-flex gap-2 align-items-center">
         <?php
         if (isset($_SESSION['id_usuario'])) {
-            echo '<button type="button" class="btn btn-primary">Mis reservas</button>';
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservasModal">Mis reservas</button>';
         } else {
             echo "Usuario no conectado.";
         }
         ?>
+        <button></button>
     <select id="categoria" name="categoria" class="form-select">
         <option value="" disabled selected>Seleccione una categoría</option>
         <?php foreach ($resultado_categorias as $categoria): ?>
@@ -95,8 +96,14 @@ $resultado_categorias=getCategorias($conn);
                 <h5 class="modal-title" id="reservasModalLabel">Mis Reservas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p>Aquí se mostrarán las reservas del usuario logueado.</p>
+            <div class="modal-body row">
+               <?php
+                    $resultado=[];
+                    $resultado=devolverReservas($conn, $id_usuario);
+                    foreach ($resultado as $libro): ?>
+                        <p><?= $libro['nombreLibros'] ?></p>
+                        <p><?= $libro['fecha_reserva'] ?></p>
+                    <?php endforeach; ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
