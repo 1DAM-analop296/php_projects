@@ -172,7 +172,7 @@ function eliminarLibro($db, $id_libro){
 
 
 /*Funcion para insertar un libro*/
-function getInsertarLibro($db, $titulo, $autor, $nombre_categoria, $disponible){
+function getInsertarLibro($db, $titulo, $autor, $nombre_categoria, $disponible, $imagen){
 
     /*Cogemos el nommbre de la categoria */
     $sql = "SELECT id_categoria FROM categorias WHERE nombre = '$nombre_categoria'";
@@ -184,8 +184,8 @@ function getInsertarLibro($db, $titulo, $autor, $nombre_categoria, $disponible){
         $id_categoria = $fila['id_categoria'];
 
     /*Se la insertamos a libros el id*/
-        $sqlInsert = "INSERT INTO libros (titulo, autor, id_categoria, disponible)
-                      VALUES ('$titulo', '$autor', $id_categoria, $disponible)";
+        $sqlInsert = "INSERT INTO libros (titulo, autor, id_categoria, disponible, imagen)
+                      VALUES ('$titulo', '$autor', $id_categoria, $disponible, '$imagen')";
 
         if (mysqli_query($db, $sqlInsert)) {
             return true;

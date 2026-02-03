@@ -34,20 +34,20 @@ $usuario=devolveradmin($conn, $id_usuario);
         }
     }
 
-    /*Insertamos un nuevo Libro */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
-    $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
-    $autor = isset($_POST["autor"]) ? $_POST["autor"] : false;
-    $nombre_categoria = isset($_POST["categoria"]) ? $_POST["categoria"] : false;
-    $disponible=isset($_POST["disponible"]) ? $_POST["disponible"] : false;
+//     /*Insertamos un nuevo Libro */
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
+//     $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
+//     $autor = isset($_POST["autor"]) ? $_POST["autor"] : false;
+//     $nombre_categoria = isset($_POST["categoria"]) ? $_POST["categoria"] : false;
+//     $disponible=isset($_POST["disponible"]) ? $_POST["disponible"] : false;
 
-    $check_insertar= getInsertarLibro($conn, $titulo, $autor, $nombre_categoria, $disponible);
-    if($check_insertar){
-        header('Location: index.php');
-         exit();
-    }
+//     $check_insertar= getInsertarLibro($conn, $titulo, $autor, $nombre_categoria, $disponible);
+//     if($check_insertar){
+//         header('Location: index.php');
+//          exit();
+//     }
     
-}
+// }
 
 ?>
 <!doctype html>
@@ -201,39 +201,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
 
 
 
-
-<!-- Modal -->
-<div class="modal fade" id="registrarLibro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Registrar Libro -->
+<div class="modal fade" id="registrarLibro" tabindex="-1" aria-labelledby="registrarLibroLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Libro</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="registrarLibroLabel">Nuevo Libro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
       <div class="modal-body">
-      <form id="newTarea" method="post" action="">
-          <div class="mb-3">
-            <label for="titulo" class="form-label">Título</label>
-            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Escribe el título del libro" required>
-          </div>
-          <div class="mb-3">
-            <label for="autor" class="form-label">Autor</label>
-             <input type="text" class="form-control" id="autor" name="autor" placeholder="Escribe el autor" required>
-          </div>
-          <div class="mb-3">
-            <label for="categoria" class="form-label">Categoria:</label>
-            <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Escribe la categoria" required>
-          </div>
-          <div class="mb-3">
-             <label for="disponible" class="form-label">Disponible:</label>
-            <input type="text" class="form-control" id="disponible" name="disponible" placeholder="Escribe el stock" required>
+        <!-- FORMULARIO DE NUEVO LIBRO -->
+        <form id="newTarea" method="post" action="nuevoLibro.php" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Escribe el título del libro" required>
             </div>
-          <div class="modal-footer">       
-        <button type="submit" name="nuevoLibro" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-      </div>
+            <div class="mb-3">
+                <label for="autor" class="form-label">Autor</label>
+                <input type="text" class="form-control" id="autor" name="autor" placeholder="Escribe el autor" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría</label>
+                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Escribe la categoría" required>
+            </div>
+            <div class="mb-3">
+                <label for="disponible" class="form-label">Disponible</label>
+                <input type="text" class="form-control" id="disponible" name="disponible" placeholder="Escribe el stock" required>
+            </div>
+            <div class="mb-3">
+                <label for="fichero_usuario" class="form-label">Imagen del libro</label>
+                <input type="file" class="form-control" id="fichero_usuario" name="fichero_usuario" accept=".png,.jpg,.gif" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" name="nuevoLibro" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
         </form>
       </div>
+    </div>
+  </div>
+</div>
+
 
 
 <script>
