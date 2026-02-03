@@ -139,5 +139,82 @@ function devolverReservas($db, $id_usuario){
     return $resultado;
 }
 
+/*Funcion para devolver los usuarios admin */
 
-?>
+function devolveradmin($db, $id_usuario){
+
+    $sql="SELECT id_usuario, nombre_usuario, email, password, is_admin FROM usuarios
+    WHERE id_usuario=$id_usuario";
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
+}
+
+/*Funcion de eliminar libro */
+
+function eliminarLibro($db, $id_libro){
+	$check=false;
+    $sqlInsert="DELETE FROM reservas WHERE id_libro='$id_libro'";
+    if(mysqli_query($db, $sqlInsert)){
+        $sqlInsert="DELETE FROM libros WHERE id_libro='$id_libro'";
+        $query=mysqli_query($db, $sqlInsert);
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+/*Funcion para insertar un libro*/
+function getInsertarLibro($db, $titulo, $autor, $nombre_categoria, $disponible){
+
+    /*Cogemos el nommbre de la categoria */
+    $sql = "SELECT id_categoria FROM categorias WHERE nombre = '$nombre_categoria'";
+    $resultado = mysqli_query($db, $sql);
+
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+
+        $fila = mysqli_fetch_assoc($resultado);
+        $id_categoria = $fila['id_categoria'];
+
+    /*Se la insertamos a libros el id*/
+        $sqlInsert = "INSERT INTO libros (titulo, autor, id_categoria, disponible)
+                      VALUES ('$titulo', '$autor', $id_categoria, $disponible)";
+
+        if (mysqli_query($db, $sqlInsert)) {
+            return true;
+        }
+
+        echo mysqli_error($db); 
+    }
+
+    return false;
+}
+
+function devolverTodasLasReservas($db){
+
+    $sql="SELECT usuarios.email AS email, usuarios.nombre AS nombre, libros.titulo AS nombreLibro FROM reservas  
+    JOIN libros ON libros.id_libro=reservas.id_libro JOIN usuarios ON usuarios.id_usuario=reservas.id_usuario";
+
+    $tareas=mysqli_query($db, $sql);
+
+    $resultado=array();
+
+    if(mysqli_num_rows($tareas)>0){
+        while($tarea=mysqli_fetch_assoc($tareas)){
+            array_push($resultado,$tarea);
+        }
+    }
+    return $resultado;
+}
+
+
+
+

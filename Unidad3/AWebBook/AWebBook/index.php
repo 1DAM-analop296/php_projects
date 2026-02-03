@@ -12,7 +12,35 @@ if (isset($_SESSION['id_usuario'])) {
 
 $resultado_libros = getTareas($conn);
 $resultado_categorias=getCategorias($conn);
-  
+
+/*Devuelve un array de array CUIDADO */
+$usuario=devolveradmin($conn, $id_usuario);
+
+ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_bd'])){
+       $id = $_POST['id_libro'];
+        $check_eliminar= eliminarLibro($conn, $id);
+        if($check_eliminar){
+            header('Location: index.php');
+            exit();
+        }else {
+         var_dump($check_eliminar);
+        }
+    }
+
+    /*Insertamos un nuevo Libro */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
+    $titulo = isset($_POST["titulo"]) ? $_POST["titulo"] : false;
+    $autor = isset($_POST["autor"]) ? $_POST["autor"] : false;
+    $nombre_categoria = isset($_POST["categoria"]) ? $_POST["categoria"] : false;
+    $disponible=isset($_POST["disponible"]) ? $_POST["disponible"] : false;
+
+    $check_insertar= getInsertarLibro($conn, $titulo, $autor, $nombre_categoria, $disponible);
+    if($check_insertar){
+        header('Location: index.php');
+         exit();
+    }
+    
+}
 
 ?>
 <!doctype html>
@@ -32,7 +60,13 @@ $resultado_categorias=getCategorias($conn);
     <div class="d-flex gap-2 align-items-center">
         <?php
         if (isset($_SESSION['id_usuario'])) {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservasModal">Mis reservas</button>';
+            /*Devuelve un array de array Cuidado */
+            if($usuario[0]['is_admin']==1){
+                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrarLibro">Registar Libro</button>';
+            }else{
+                 echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservasModal">Mis reservas</button>';
+            }
+        
         } else {
             echo "Usuario no conectado.";
         }
@@ -63,23 +97,36 @@ $resultado_categorias=getCategorias($conn);
                     </p>
                     <div class="mt-auto">
                         <?php
-                        $texto = ($libro['disponible'] == 0) ? 'No disponible' : 'Reservar';
+                        $textoUsuario = ($libro['disponible'] == 0) ? 'No disponible' : 'Reservar';
+                        $textoAdmin = ($libro['disponible'] == 0) ? 'No disponible' : 'Eliminar';
                         $clase = ($libro['disponible'] == 0) ? 'btn-secondary' : 'btn-primary';
                         ?>
-                       <form action="reserva.php" method="post" class="d-inline">
-                        <input type="hidden" name="id_libro" value="<?= $libro['id_libro']; ?>">
-                        
+                       
                         <?php if(isset($_SESSION['id_usuario'])): ?>
-                            <button type="submit" name="resevar" class="btn <?= $clase ?> w-100">
-                                <?= $texto ?>
-                            </button>
+                            <?php if($usuario[0]['is_admin']==1): ?>
+                                <form action="" method="post" class="eliminar">
+                                    <input type="hidden" name="id_libro" value="<?= $libro['id_libro']; ?>">
+                                    <button type="submit" name="eliminar_bd" class="btn <?= $clase ?> w-100">
+                                    <?= $textoAdmin ?>
+                                    </button>
+                                </form>
+                            <?php else: ?>
+                                <form action="reserva.php" method="post" class="d-inline">
+                                    <input type="hidden" name="id_libro" value="<?= $libro['id_libro']; ?>">
+                                    <button type="submit" name="resevar" class="btn <?= $clase ?> w-100">
+                                    <?= $textoUsuario ?>
+                                    </button>
+                                </form>
+                             <?php endif; ?>
                         <?php else: ?>
-                            <button type="button" class="btn <?= $clase ?> w-100"
-                                    onclick="window.location.href='./login.php'">
-                                <?= $texto ?>
-                            </button>
+                            <form action="reserva.php" method="post" class="d-inline">
+                                <input type="hidden" name="id_libro" value="<?= $libro['id_libro']; ?>">
+                                <button type="button" class="btn <?= $clase ?> w-100"
+                                        onclick="window.location.href='./login.php'">
+                                    <?= $textoUsuario ?>
+                                </button>
+                            </form>
                         <?php endif; ?>
-                    </form>
                     </div>
                 </div>
             </div>
@@ -111,6 +158,43 @@ $resultado_categorias=getCategorias($conn);
         </div>
     </div>
 </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="registrarLibro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Libro</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form id="newTarea" method="post" action="">
+          <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Escribe el título del libro" required>
+          </div>
+          <div class="mb-3">
+            <label for="autor" class="form-label">Autor</label>
+             <input type="text" class="form-control" id="autor" name="autor" placeholder="Escribe el autor" required>
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Escribe la categoria" required>
+          </div>
+          <div class="mb-3">
+             <label for="disponible" class="form-label">Disponible:</label>
+            <input type="text" class="form-control" id="disponible" name="disponible" placeholder="Escribe el stock" required>
+            </div>
+          <div class="modal-footer">       
+        <button type="submit" name="nuevoLibro" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+        </form>
+      </div>
+
 
 <script>
 function registrarLibro() {
