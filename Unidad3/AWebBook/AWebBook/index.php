@@ -13,8 +13,15 @@ if (isset($_SESSION['id_usuario'])) {
 $resultado_libros = getTareas($conn);
 $resultado_categorias=getCategorias($conn);
 
-/*Devuelve un array de array CUIDADO */
+if (isset($_POST["categoria"]) && !empty($_POST["categoria"])) {
+    $categoriaSeleccionada = $_POST["categoria"];
+    $resultado_libros = getLibrosPorCategoriaNombre($conn, $categoriaSeleccionada);
+}
+
+if (isset($_SESSION['id_usuario'])) {
+    /*Devuelve un array de array CUIDADO */
 $usuario=devolveradmin($conn, $id_usuario);
+} 
 
  if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_bd'])){
        $id = $_POST['id_libro'];
@@ -63,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
             /*Devuelve un array de array Cuidado */
             if($usuario[0]['is_admin']==1){
                 echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrarLibro">Registar Libro</button>';
+                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservasAdmin">Reservas</button>';
             }else{
                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservasModal">Mis reservas</button>';
             }
@@ -72,17 +80,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
         }
         ?>
         <button></button>
-    <select id="categoria" name="categoria" class="form-select">
-        <option value="" disabled selected>Seleccione una categoría</option>
-        <?php foreach ($resultado_categorias as $categoria): ?>
-            <option value="<?= htmlspecialchars($categoria['nombre']); ?>">
-                <?= htmlspecialchars($categoria['nombre']); ?>
-            </option>
-        <?php endforeach; ?>
+    <form method="POST" action="" class="d-flex gap-2">
+    <select name="categoria" class="form-select">
+        <option value="">Todas las categorías</option>
+        <?php foreach ($resultado_categorias as $cat): ?>
+    <option
+        value="<?= htmlspecialchars($cat["nombre"]) ?>"
+        <?= (isset($_POST["categoria"]) && $_POST["categoria"] == $cat["nombre"]) ? "selected" : "" ?>>
+        <?= htmlspecialchars($cat['nombre']) ?>
+    </option>
+<?php endforeach; ?>
+
     </select>
 
-    <button type="button" class="btn btn-success">Filtrar</button>
-    <button type="button" class="btn btn-danger">Limpiar</button>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+    <a href="" class="btn btn-secondary">Limpiar</a>
+</form>
+
 </div>
     <div class="row">
         <?php foreach ($resultado_libros as $libro): ?>
@@ -150,6 +164,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nuevoLibro'])) {
                     foreach ($resultado as $libro): ?>
                         <p><?= $libro['nombreLibros'] ?></p>
                         <p><?= $libro['fecha_reserva'] ?></p>
+                    <?php endforeach; ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Todas las reservas de todos los usuarios -->
+<div class="modal fade" id="reservasAdmin" tabindex="-1" aria-labelledby="reservasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservasModalLabel">Mis Reservas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body row">
+               <?php
+                    $resultado=[];
+                    /*Devuelve un array de array CUIDADO */
+                    $resultado=devolverTodasLasReservas($conn, $id_usuario);
+                    foreach ($resultado as $libro): ?>
+                        <p class="d-inline me-3"><?= $libro['nombreUsuario'] ?></p>
+                        <p class="d-inline me-3"><?= $libro['email'] ?></p>
+                        <p class="d-inline me-3"><?= $libro['nombreLibro'] ?></p>
                     <?php endforeach; ?>
             </div>
             <div class="modal-footer">
